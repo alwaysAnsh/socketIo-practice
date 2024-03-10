@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import {io} from 'socket.io-client'
@@ -7,7 +7,7 @@ function App() {
 
   const [message, setMessage ] = useState('')
   
-  const socket = io("http://localhost:4000")
+  const socket = useMemo(() => io("http://localhost:4000"), [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,9 +23,9 @@ function App() {
     socket.on("welcome", (data) => {
       console.log(data)
     })
-    // socket.on("welcome-join", (data) => {
-    //   console.log(data)
-    // })
+    socket.on("welcome-join", (data) => {
+      console.log(data)
+    })
   }, [])
 
   return (
